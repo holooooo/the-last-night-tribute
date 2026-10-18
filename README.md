@@ -2,6 +2,8 @@
 
 **在线体验：<https://the-last-night-tribute.pages.dev>**（桌面浏览器 + 独显/Apple Silicon 效果最佳）
 
+![雨夜街道](docs/screenshot.jpg)
+
 一个可在浏览器中实时运行的赛博朋克雨夜街道，目标是尽量复刻《The Last Night》的
 "2D 像素美术 + 3D 实时光照" 画面风格。所有资产（建筑、招牌、角色、动画）都是代码
 程序化生成的，**没有使用原游戏的任何文件**。
@@ -10,6 +12,8 @@
 搭渲染管线、写着色器，到画像素主角、调试修 bug，全程约 86 分钟，期间没有任何人工补充指令。
 
 > 这是粉丝向的技术致敬，与 Odd Tales、Raw Fury 及《The Last Night》官方无关。
+
+![角色特写：拉面店暖光勾出的轮廓光](docs/closeup.jpg)
 
 ## 运行
 
