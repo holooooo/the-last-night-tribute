@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Last Night — tribute scene</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #000;
+        overflow: hidden;
+        font-family: 'SF Mono', Menlo, Consolas, monospace;
+        color: #cfe7ef;
+      }
+      #stage {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      canvas {
+        display: block;
+        image-rendering: auto;
+      }
+      #hud {
+        position: fixed;
+        left: 18px;
+        bottom: 14px;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        line-height: 1.7;
+        opacity: 0.55;
+        pointer-events: none;
+        text-shadow: 0 0 6px #000;
+        white-space: pre;
+      }
+      #stats {
+        position: fixed;
+        right: 18px;
+        bottom: 14px;
+        font-size: 11px;
+        opacity: 0.45;
+        pointer-events: none;
+        white-space: pre;
+        text-align: right;
+      }
+      #title {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        pointer-events: none;
+        transition: opacity 2.5s ease;
+      }
+      #title h1 {
+        margin: 0;
+        font-weight: 400;
+        font-size: 30px;
+        letter-spacing: 0.6em;
+        color: #e8f6ff;
+        text-shadow: 0 0 18px rgba(120, 220, 255, 0.6);
+      }
+      #title p {
+        margin: 10px 0 0;
+        font-size: 11px;
+        letter-spacing: 0.35em;
+        opacity: 0.6;
+      }
+      #loading {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        letter-spacing: 0.4em;
+        background: #000;
+        transition: opacity 1.2s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage"></div>
+    <div id="title" style="opacity: 0">
+      <h1>THE LAST NIGHT</h1>
+      <p>A FAN-MADE TRIBUTE SCENE · WEBGL2</p>
+    </div>
+    <div id="hud"></div>
+    <div id="stats"></div>
+    <div id="loading">GENERATING CITY…</div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

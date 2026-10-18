@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>sprite preview</title>
+    <style>
+      body { margin: 0; background: #1a1d24; }
+      canvas { image-rendering: pixelated; display: block; }
+    </style>
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+    <script type="module">
+      import { makeHeroineImage, H_FW, H_FH, H_FRAMES } from '/src/world/heroine.js';
+      const params = new URLSearchParams(location.search);
+      const Z = parseInt(params.get('z') || '4', 10);
+      const from = parseInt(params.get('from') || '0', 10);
+      const count = parseInt(params.get('n') || '8', 10);
+      const img = makeHeroineImage();
+      const c = document.getElementById('c');
+      c.width = H_FW * count * Z;
+      c.height = H_FH * 3 * Z;
+      const g = c.getContext('2d');
+      g.imageSmoothingEnabled = false;
+      const off = document.createElement('canvas');
+      off.width = H_FW * count;
+      off.height = H_FH * 3;
+      const og = off.getContext('2d');
+      const id = og.createImageData(off.width, off.height);
+      const to8 = (v) => Math.max(0, Math.min(255, Math.round(Math.pow(v, 1) * 255)));
+      for (let y = 0; y < H_FH; y++)
+        for (let x = 0; x < H_FW * count; x++) {
+          const sx = from * H_FW + x;
+          const i = y * img.w + sx;
+          const a = img.albedo[i * 4 + 3];
+          // row 1: albedo over a dusk backdrop
+          const bg = [26, 32, 44];
+          for (let k = 0; k < 3; k++) id.data[(y * off.width + x) * 4 + k] = a > 0.5 ? to8(img.albedo[i * 4 + k]) : bg[k];
+          id.data[(y * off.width + x) * 4 + 3] = 255;
+          // row 2: emissive
+          const o2 = ((y + H_FH) * off.width + x) * 4;
+          for (let k = 0; k < 3; k++) id.data[o2 + k] = a > 0.5 ? to8(img.albedo[i * 4 + k] * 0.25 + img.emissive[i * 3 + k]) : 8;
+          id.data[o2 + 3] = 255;
+          // row 3: height
+          const o3 = ((y + H_FH * 2) * off.width + x) * 4;
+          const h = img.height[i];
+          id.data[o3] = to8(h * 0.6);
+          id.data[o3 + 1] = to8(h * 0.6);
+          id.data[o3 + 2] = to8(h * 0.8);
+          id.data[o3 + 3] = 255;
+        }
+      og.putImageData(id, 0, 0);
+      g.drawImage(off, 0, 0, c.width, c.height);
+      window.__shot = async (name) => {
+        const url = c.toDataURL('image/png');
+        await fetch(`/__capture?name=${name}`, { method: 'POST', body: url });
+        return name;
+      };
+    </script>
+  </body>
+</html>
